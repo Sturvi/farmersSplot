@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        byte[][] field = imputData();
+        byte[][] field = inputData();
         byte[][] field2 = new byte[field.length][field[0].length];
-
+        boolean test = false;
         for (int i = 0; i < field.length; i++) {
-            boolean test = false;
+
             for (int j = 0; j < field[0].length; j++) {
                 if (field[i][j] == 1) {
                     field2[i][j] = field[i][j];
@@ -93,7 +93,7 @@ public class Main {
 
     }
 
-    public static  byte[][] imputData() {
+    public static  byte[][] inputData() {
         Scanner scanner = new Scanner(System.in);
         byte m = scanner.nextByte();
         byte n = scanner.nextByte();
