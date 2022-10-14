@@ -6,9 +6,8 @@ public class Main {
         byte[][] field2 = new byte[field.length][field[0].length];
         boolean test = false;
         for (int i = 0; i < field.length; i++) {
-
             for (int j = 0; j < field[0].length; j++) {
-                if (field[i][j] == 1) {
+                if (field[i][j] == 1 && field2[i][j]!=2) {
                     field2[i][j] = field[i][j];
                     test = true;
                     break;
@@ -73,22 +72,35 @@ public class Main {
         for (int i = field.length - 1; i >= 0; i--) {
             for (int j = field[0].length - 1; j >= 0; j--) {
                 if (field2[i][j] == 0 && field[i][j] == 1) {
-                    if ((i < (field.length - 2) ? (field2[i + 1][j] == 1) : false) ||
-                            ((i < field.length - 2 && j < field[0].length - 2) ? (field2[i + 1][j + 1] == 1) : false) ||
-                            (j < field[0].length - 2 ? (field2[i][j + 1] == 1) : false) ||
-                            ((i > 0 && j < field[0].length - 2) ? (field2[i - 1][j + 1] == 1) : false) ||
-                            ((i > 0) ? (field2[i - 1][j] == 1) : false) ||
-                            ((i > 0 && j > 0) ? (field2[i - 1][j - 1] == 1) : false) ||
-                            ((j > 0) ? (field2[i][j - 1] == 1) : false) ||
-                            ((i < (field.length - 2) && j > 0) ? (field2[i + 1][j - 1] == 1) : false)
-                    ) field2[i][j] = 1;
+                    for (int a = Math.max(0, i - 1); a < Math.min(field.length, i + 2); a++) {
+                        for (int b = Math.max(0, j - 1); b < Math.min(field[0].length, j + 2); b++) {
+                            if (field2[a][b]==1) {
+                                field2[i][j] = 1;
+                                break;
+                            }
+                        }
+                        if (field2[i][j]==1)
+                            break;
+                    }
                 }
-
-
             }
-
+        }
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                System.out.print(field[i][j]+" ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                System.out.print(field2[i][j]+" ");
+            }
+            System.out.println("");
         }
 
+        System.out.println("");
+        System.out.println(field2[0][4]);
 
 
     }
@@ -107,32 +119,3 @@ public class Main {
     }
 }
 
-    /*public static byte[][](){
-        Scanner scanner = new Scanner(System.in);
-        byte n = scanner.nextByte();
-        byte m = scanner.nextByte();
-        byte [][] field = new byte[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                field[i][j]= scanner.nextByte();
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.println(field[i][j]);
-            }
-        }
-    }*/
-
-/*
-if ((i<(m-2)?(field2[i+1][j]==1):false) ||
-        ((i<m-2 && j<n-2)?(field2[i+1][j+1]==1):false) ||
-        (j<n-2?(field2[i][j+1]==1):false)  ||
-        ((i>0 && j<n-2)?(field2[i-1][j+1]==1):false) ||
-        ((i>0)?(field2[i-1][j]==1):false) ||
-        ((i>0 && j>0)?(field2[i-1][j-1]==1):false) ||
-        ((j>0)?(field2[i][j-1]==1):false) ||
-        ((i<(m-2) && j>0)?(field2[i+1][j-1]==1):false)
-        ) {
-        field2[i][j]=1;
-        }*/
