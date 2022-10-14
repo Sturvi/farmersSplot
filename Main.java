@@ -8,6 +8,7 @@ public class Main {
         field2=searchForTheEntryPointToTheMatrix(field,field2);
         field2=searchForPossiblePlotsOfLand(field, field2);
         field2=searchForUnaccountedLandPlots(field, field2);
+        field2=replaceAll1to2(field2);
 
 
         for (int i = 0; i < field.length; i++) {
@@ -25,18 +26,23 @@ public class Main {
         }
     }
 
+    public static byte[][] replaceAll1to2 (byte field2[][]){
+        for (int i = 0; i < field2.length; i++) {
+            for (int j = 0; j < field2[0].length; j++) {
+                if (field2[i][j]==1)
+                    field2[i][j]=2;
+            }
+        }
+        return field2;
+    }
     public static byte[][] searchForTheEntryPointToTheMatrix (byte[][] field, byte field2[][]){
-        boolean test = false;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
                 if (field[i][j] == 1 && field2[i][j]!=2) {
                     field2[i][j] = field[i][j];
-                    test = true;
-                    break;
+                    return field2;
                 }
             }
-            if (test)
-                break;
         }
         return field2;
     }
