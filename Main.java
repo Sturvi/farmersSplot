@@ -28,7 +28,7 @@ public class Main {
             }
             if (procent == bestProcent && bestTotalPlotsForBuying<totalPlotsForBuying)
                 bestTotalPlotsForBuying = totalPlotsForBuying;
-            iMin=0; iMax=0; jMin=0; jMax=0; totalPlotsForBuying=0; totalGoodPlots=0; matrixHaveTheEntryPoints=false;
+            iMax=0; jMax=0; totalPlotsForBuying=0; totalGoodPlots=0; matrixHaveTheEntryPoints=false;
         }
         System.out.println(bestTotalPlotsForBuying);
     }
