@@ -67,7 +67,7 @@ public class Main {
         return field2;
     }
     public static byte[][] searchForPossiblePlotsOfLand (byte field[][], byte field2[][]){
-        boolean test=false;
+        boolean test=false; int temp=0;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
                 if (field2[i][j] == 1) {
@@ -75,14 +75,22 @@ public class Main {
                         for (int b = Math.max(0, j - 1); b < Math.min(field[0].length, j + 2); b++) {
                             if (field[a][b]==1 && field2[a][b] != 1) {
                                 field2[a][b] = 1;
-                                test=true;
+                                if (a<i)
+                                    test=true;
+                                    temp=j;
                             }
                         }
                     }
-                    if (test && i>0) {
-                        i = i - 1;
-                        test=false;
-                    }
+
+                }
+
+                if (test && j==field[0].length-1) {
+                    i = i + 1;
+                    j=temp;
+                    test = false;
+                }
+                if (test && i>0) {
+                    i = i - 1;
                 }
             }
         }
