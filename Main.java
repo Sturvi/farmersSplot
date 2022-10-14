@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Main {
 
     public static int totalPlotsForBuying=0, totalGoodPlots=0;
-    public static int iMin=0, iMax=0, jMin=0, jMax=0;
+    public static int iMin, iMax=0, jMin, jMax=0;
     public static boolean matrixHaveTheEntryPoints=false;
 
     public static void main(String[] args) {
@@ -12,8 +12,9 @@ public class Main {
         int bestTotalPlotsForBuying=0;
         double bestProcent=0;
 
+
         while (true) {
-            System.out.println("");
+            iMin=field.length-1;    jMin=field[0].length-1;
             field2 = searchForTheEntryPointToTheMatrix(field, field2);
             if (matrixHaveTheEntryPoints==false) break;
             field2 = searchForPossiblePlotsOfLand(field, field2);
