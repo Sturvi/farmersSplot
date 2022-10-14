@@ -26,25 +26,11 @@ public class Main {
                 bestTotalPlotsForBuying = totalPlotsForBuying;
                 bestProcent = procent;
             }
+            if (procent == bestProcent && bestTotalPlotsForBuying<totalPlotsForBuying)
+                bestTotalPlotsForBuying = totalPlotsForBuying;
             iMin=0; iMax=0; jMin=0; jMax=0; totalPlotsForBuying=0; totalGoodPlots=0; matrixHaveTheEntryPoints=false;
-           /* for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j]+" ");
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field2[i][j]+" ");
-            }
-            System.out.println("");
-        }*/
         }
         System.out.println(bestTotalPlotsForBuying);
-
-
-
     }
 
     public static byte[][] replaceAll1to2 (byte field[][], byte field2[][]){
@@ -129,9 +115,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         byte m = scanner.nextByte();
         byte n = scanner.nextByte();
-        byte[][] field = new byte[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        byte[][] field = new byte[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 field[i][j] = scanner.nextByte();
             }
         }
