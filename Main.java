@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         byte[][] field = inputData();
         byte[][] field2 = new byte[field.length][field[0].length];
