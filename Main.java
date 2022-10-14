@@ -2,17 +2,31 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static int totalPlotsForBuying=0, totalGoodPlots=0;
+    public static int iMin=0, iMax=0, jMin=0, jMax=0;
+    public static boolean matrixHaveTheEntryPoints=false;
+
     public static void main(String[] args) {
         byte[][] field = inputData();
         byte[][] field2 = new byte[field.length][field[0].length];
+        int bestTotalPlotsForBuying=0;
+        double bestProcent=0;
 
-        field2=searchForTheEntryPointToTheMatrix(field,field2);
-        field2=searchForPossiblePlotsOfLand(field, field2);
-        field2=searchForUnaccountedLandPlots(field, field2);
-        field2=replaceAll1to2(field2);
-
-
-        for (int i = 0; i < field.length; i++) {
+        while (true) {
+            System.out.println("");
+            field2 = searchForTheEntryPointToTheMatrix(field, field2);
+            if (matrixHaveTheEntryPoints==false) break;
+            field2 = searchForPossiblePlotsOfLand(field, field2);
+            field2 = searchForUnaccountedLandPlots(field, field2);
+            field2 = replaceAll1to2(field, field2);
+            totalPlotsForBuying = (iMax - iMin + 1) * (jMax - jMin + 1);
+            double procent = (totalGoodPlots * 100) / totalPlotsForBuying;
+            if (procent > bestProcent) {
+                bestTotalPlotsForBuying = totalPlotsForBuying;
+                bestProcent = procent;
+            }
+            iMin=0; iMax=0; jMin=0; jMax=0; totalPlotsForBuying=0; totalGoodPlots=0; matrixHaveTheEntryPoints=false;
+           /* for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
                 System.out.print(field[i][j]+" ");
             }
@@ -24,14 +38,21 @@ public class Main {
                 System.out.print(field2[i][j]+" ");
             }
             System.out.println("");
+        }*/
         }
+        System.out.println(bestTotalPlotsForBuying);
+
+
+
     }
 
-    public static byte[][] replaceAll1to2 (byte field2[][]){
+    public static byte[][] replaceAll1to2 (byte field[][], byte field2[][]){
         for (int i = 0; i < field2.length; i++) {
             for (int j = 0; j < field2[0].length; j++) {
-                if (field2[i][j]==1)
-                    field2[i][j]=2;
+                if (field2[i][j]==1)    field2[i][j]=2;
+
+                if (i>=iMin && i<=iMax && j>=jMin && j<=jMax)
+                    if (field[i][j]==1) totalGoodPlots++;
             }
         }
         return field2;
@@ -41,6 +62,7 @@ public class Main {
             for (int j = 0; j < field[0].length; j++) {
                 if (field[i][j] == 1 && field2[i][j]!=2) {
                     field2[i][j] = field[i][j];
+                    matrixHaveTheEntryPoints=true;
                     return field2;
                 }
             }
@@ -61,6 +83,12 @@ public class Main {
                         if (field2[i][j]==1)
                             break;
                     }
+                }
+                if (field2[i][j]==1 && field[i][j]!=2) {
+                    iMax = Math.max(i, iMax);
+                    iMin = Math.min(i, iMin);
+                    jMax = Math.max(j, jMax);
+                    jMin = Math.min(j, jMin);
                 }
             }
         }
