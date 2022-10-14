@@ -4,6 +4,28 @@ public class Main {
     public static void main(String[] args) {
         byte[][] field = inputData();
         byte[][] field2 = new byte[field.length][field[0].length];
+
+        field2=searchForTheEntryPointToTheMatrix(field,field2);
+        field2=searchForPossiblePlotsOfLand(field, field2);
+        field2=searchForUnaccountedLandPlots(field, field2);
+
+
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                System.out.print(field[i][j]+" ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                System.out.print(field2[i][j]+" ");
+            }
+            System.out.println("");
+        }
+    }
+
+    public static byte[][] searchForTheEntryPointToTheMatrix (byte[][] field, byte field2[][]){
         boolean test = false;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
@@ -16,59 +38,9 @@ public class Main {
             if (test)
                 break;
         }
-
-        boolean itemp = true, jtemp = true;
-        boolean itemp1 = true, jtemp1 = true;
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                if (field2[i][j] == 1) {
-                    if (itemp == true) {
-                        if (i < (field.length - 2) ? (field[i + 1][j] == 1) : false) {
-                            field2[i + 1][j] = 1;
-                            if (i == field.length - 2)
-                                jtemp1 = false;
-                        }
-                        if ((j > 0 && i < field.length - 2) ? (field[i + 1][j - 1] == 1) : false) {
-                            field2[i + 1][j - 1] = 1;
-                            if (i == field.length - 2)
-                                jtemp1 = false;
-                        }
-                    }
-                    if (itemp == true && jtemp == true) {
-                        if ((i < field.length - 2 && j < field[0].length - 2) ? (field[i + 1][j + 1] == 1) : false) {
-                            field2[i + 1][j + 1] = 1;
-                            if (j == field[0].length - 2)
-                                jtemp1 = false;
-                            if (i == field.length - 2)
-                                jtemp1 = false;
-                        }
-                    }
-
-                    if (jtemp == true) {
-
-                        if (j < field[0].length - 2 ? (field[i][j + 1] == 1) : false) {
-                            field2[i][j + 1] = 1;
-                            if (j == field[0].length - 2)
-                                jtemp1 = false;
-                        }
-                        if (((i > 0 && j < field[0].length - 2) ? (field[i - 1][j + 1] == 1) : false) &&
-                                (i > 0 ? (field2[i - 1][j + 1] != 1) : false)) {
-                            field2[i - 1][j + 1] = 1;
-                            if (j == field[0].length - 2)
-                                jtemp1 = false;
-                            else
-                                i = i - 1;
-                        }
-                    }
-                    itemp = itemp1;
-                    jtemp = jtemp1;
-
-
-                }
-            }
-
-        }
-
+        return field2;
+    }
+    public static byte[][] searchForUnaccountedLandPlots (byte field[][], byte field2[][] ){
         for (int i = field.length - 1; i >= 0; i--) {
             for (int j = field[0].length - 1; j >= 0; j--) {
                 if (field2[i][j] == 0 && field[i][j] == 1) {
@@ -85,26 +57,30 @@ public class Main {
                 }
             }
         }
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j]+" ");
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field2[i][j]+" ");
-            }
-            System.out.println("");
-        }
-
-        System.out.println("");
-        System.out.println(field2[0][4]);
-
-
+        return field2;
     }
-
+    public static byte[][] searchForPossiblePlotsOfLand (byte field[][], byte field2[][]){
+        boolean test=false;
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                if (field2[i][j] == 1) {
+                    for (int a = Math.max(0, i - 1); a < Math.min(field.length, i + 2); a++) {
+                        for (int b = Math.max(0, j - 1); b < Math.min(field[0].length, j + 2); b++) {
+                            if (field[a][b]==1 && field2[a][b] != 1) {
+                                field2[a][b] = 1;
+                                test=true;
+                            }
+                        }
+                    }
+                    if (test && i>0) {
+                        i = i - 1;
+                        test=false;
+                    }
+                }
+            }
+        }
+        return field2;
+    }
     public static  byte[][] inputData() {
         Scanner scanner = new Scanner(System.in);
         byte m = scanner.nextByte();
