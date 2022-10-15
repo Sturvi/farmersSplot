@@ -6,10 +6,10 @@ public class Main {
         byte[][] field = inputData();
         byte[][] field2 = new byte[field.length][field[0].length];
         int bestTotalPlotsForBuying=0;
+        double bestProcent=0;
         while (true) {
             //[0] - totalGoodPlotsforByning, [1] - iMin, [2] - iMax, [3] - jMin, [4] - jMax
             int [] plotsCoordAndTotalPlotsForBuying = new int[5];
-            double bestProcent=0;
             boolean matrixHaveTheEntryPoints=false;
             plotsCoordAndTotalPlotsForBuying[1]=field.length-1;
             plotsCoordAndTotalPlotsForBuying[3]=field[0].length-1;
@@ -23,11 +23,19 @@ public class Main {
 
             double procent = (plotsCoordAndTotalPlotsForBuying[0] * 100) / totalPlots;
             if (procent > bestProcent) {
-                bestTotalPlotsForBuying = plotsCoordAndTotalPlotsForBuying[0];
+                bestTotalPlotsForBuying = totalPlots;
                 bestProcent = procent;
             } else if (procent == bestProcent && bestTotalPlotsForBuying<totalPlots)
                 bestTotalPlotsForBuying = totalPlots;
 
+
+            /*for (int i = 0; i < field.length; i++) {
+                for (int j = 0; j < field[0].length; j++) {
+                    System.out.print(field2[i][j]);
+                }
+                System.out.println("");
+            }
+            System.out.println("");*/
             plotsCoordAndTotalPlotsForBuying[2]=0;
             plotsCoordAndTotalPlotsForBuying[4]=0;
             plotsCoordAndTotalPlotsForBuying[0]=0;
@@ -66,13 +74,14 @@ public class Main {
                             break;
                     }
                 }
-                if (field2[i][j]==1 && field[i][j]!=2) {
+                if (field2[i][j]==1) {
                     plotsCoordAndTotalBestPlotsForBuying[2] = Math.max(i, plotsCoordAndTotalBestPlotsForBuying[2]);
                     plotsCoordAndTotalBestPlotsForBuying[1] = Math.min(i, plotsCoordAndTotalBestPlotsForBuying[1]);
                     plotsCoordAndTotalBestPlotsForBuying[4] = Math.max(j, plotsCoordAndTotalBestPlotsForBuying[4]);
                     plotsCoordAndTotalBestPlotsForBuying[3] = Math.min(j, plotsCoordAndTotalBestPlotsForBuying[3]);
+                    field2[i][j]=2;
                 }
-                if (field2[i][j]==1)    field2[i][j]=2;
+
 
                 if (i>=plotsCoordAndTotalBestPlotsForBuying[1] &&
                         i<=plotsCoordAndTotalBestPlotsForBuying[2] &&
