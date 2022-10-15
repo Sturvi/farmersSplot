@@ -16,7 +16,8 @@ public class Main {
         while (true) {
             iMin=field.length-1;    jMin=field[0].length-1;
             field2 = searchForTheEntryPointToTheMatrix(field, field2);
-            if (matrixHaveTheEntryPoints==false) break;
+            if (matrixHaveTheEntryPoints==false)
+                break;
             field2 = searchForPossiblePlotsOfLand(field, field2);
             field2 = searchForUnaccountedLandPlots(field, field2);
             totalPlotsForBuying = (iMax - iMin + 1) * (jMax - jMin + 1);
