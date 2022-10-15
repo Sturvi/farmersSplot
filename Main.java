@@ -31,7 +31,6 @@ public class Main {
             plotsCoordAndTotalPlotsForBuying[2]=0;
             plotsCoordAndTotalPlotsForBuying[4]=0;
             plotsCoordAndTotalPlotsForBuying[0]=0;
-            plotsCoordAndTotalPlotsForBuying[0]=0;
             matrixHaveTheEntryPoints=false;
         }
         System.out.println(bestTotalPlotsForBuying);
