@@ -29,13 +29,6 @@ public class Main {
                 bestTotalPlotsForBuying = totalPlots;
 
 
-            /*for (int i = 0; i < field.length; i++) {
-                for (int j = 0; j < field[0].length; j++) {
-                    System.out.print(field2[i][j]);
-                }
-                System.out.println("");
-            }
-            System.out.println("");*/
             plotsCoordAndTotalPlotsForBuying[2]=0;
             plotsCoordAndTotalPlotsForBuying[4]=0;
             plotsCoordAndTotalPlotsForBuying[0]=0;
@@ -65,7 +58,7 @@ public class Main {
                 if (field2[i][j] == 0 && field[i][j] == 1) {
                     for (int a = Math.max(0, i - 1); a < Math.min(field.length, i + 2); a++) {
                         for (int b = Math.max(0, j - 1); b < Math.min(field[0].length, j + 2); b++) {
-                            if (field2[a][b]==1) {
+                            if (field2[a][b]>=1) {
                                 field2[i][j] = 1;
                                 break;
                             }
@@ -93,16 +86,16 @@ public class Main {
         }
     }
     public static void searchForPossiblePlotsOfLand (byte field[][], byte field2[][]){
-        boolean test=false; int temp=0;
+        boolean test=false; boolean test2=false; int temp=0;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
                 if (field2[i][j] == 1) {
                     for (int a = Math.max(0, i - 1); a < Math.min(field.length, i + 2); a++) {
                         for (int b = Math.max(0, j - 1); b < Math.min(field[0].length, j + 2); b++) {
-                            if (field[a][b]==1 && field2[a][b] != 1) {
+                            if (field[a][b]==1 && field2[a][b] == 0) {
                                 field2[a][b] = 1;
                                 if (a<i)
-                                    test=true;
+                                    test=test2=true;
                                     temp=j;
                             }
                         }
@@ -115,8 +108,9 @@ public class Main {
                     j=temp;
                     test = false;
                 }
-                if (test && i>0) {
+                if (test2 && i>0) {
                     i = i - 1;
+                    test2=false;
                 }
             }
         }
