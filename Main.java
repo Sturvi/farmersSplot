@@ -2,51 +2,57 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int totalGoodPlots=0;
-    public static int iMin, iMax=0, jMin, jMax=0;
-    public static boolean matrixHaveTheEntryPoints=false;
-
     public static void main(String[] args) {
         byte[][] field = inputData();
         byte[][] field2 = new byte[field.length][field[0].length];
         int bestTotalPlotsForBuying=0;
-        double bestProcent=0;
-
-
         while (true) {
-            int totalPlotsForBuying=0;
-            iMin=field.length-1;    jMin=field[0].length-1;
-            field2 = searchForTheEntryPointToTheMatrix(field, field2);
+            //[0] - totalGoodPlotsforByning, [1] - iMin, [2] - iMax, [3] - jMin, [4] - jMax
+            int [] plotsCoordAndTotalPlotsForBuying = new int[5];
+            double bestProcent=0;
+            boolean matrixHaveTheEntryPoints=false;
+            plotsCoordAndTotalPlotsForBuying[1]=field.length-1;
+            plotsCoordAndTotalPlotsForBuying[3]=field[0].length-1;
+            matrixHaveTheEntryPoints=searchForTheEntryPointToTheMatrix(field, field2);
             if (matrixHaveTheEntryPoints==false)
                 break;
-            field2 = searchForPossiblePlotsOfLand(field, field2);
-            field2 = searchForUnaccountedLandPlots(field, field2);
-            totalPlotsForBuying = (iMax - iMin + 1) * (jMax - jMin + 1);
-            double procent = (totalGoodPlots * 100) / totalPlotsForBuying;
+            searchForPossiblePlotsOfLand(field, field2);
+            searchForUnaccountedLandPlots(field, field2, plotsCoordAndTotalPlotsForBuying);
+            int totalPlots = (plotsCoordAndTotalPlotsForBuying[2] - plotsCoordAndTotalPlotsForBuying[1] + 1) *
+                    (plotsCoordAndTotalPlotsForBuying[4] - plotsCoordAndTotalPlotsForBuying[3] + 1);
+
+            double procent = (plotsCoordAndTotalPlotsForBuying[0] * 100) / totalPlots;
             if (procent > bestProcent) {
-                bestTotalPlotsForBuying = totalPlotsForBuying;
+                bestTotalPlotsForBuying = plotsCoordAndTotalPlotsForBuying[0];
                 bestProcent = procent;
-            }
-            if (procent == bestProcent && bestTotalPlotsForBuying<totalPlotsForBuying)
-                bestTotalPlotsForBuying = totalPlotsForBuying;
-            iMax=0; jMax=0; totalPlotsForBuying=0; totalGoodPlots=0; matrixHaveTheEntryPoints=false;
+            } else if (procent == bestProcent && bestTotalPlotsForBuying<totalPlots)
+                bestTotalPlotsForBuying = totalPlots;
+
+            plotsCoordAndTotalPlotsForBuying[2]=0;
+            plotsCoordAndTotalPlotsForBuying[4]=0;
+            plotsCoordAndTotalPlotsForBuying[0]=0;
+            plotsCoordAndTotalPlotsForBuying[0]=0;
+            matrixHaveTheEntryPoints=false;
         }
         System.out.println(bestTotalPlotsForBuying);
     }
 
-    public static byte[][] searchForTheEntryPointToTheMatrix (byte[][] field, byte field2[][]){
+    public static boolean searchForTheEntryPointToTheMatrix (byte[][] field, byte field2[][]){
+        boolean matrixHaveTheEntryPoints=false;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
                 if (field[i][j] == 1 && field2[i][j]!=2) {
                     field2[i][j] = field[i][j];
                     matrixHaveTheEntryPoints=true;
-                    return field2;
+                    return matrixHaveTheEntryPoints;
                 }
             }
         }
-        return field2;
+        return matrixHaveTheEntryPoints;
     }
-    public static byte[][] searchForUnaccountedLandPlots (byte field[][], byte field2[][] ){
+    public static void searchForUnaccountedLandPlots (byte field[][],
+                                                          byte field2[][], 
+                                                          int [] plotsCoordAndTotalBestPlotsForBuying){
         for (int i = field.length - 1; i >= 0; i--) {
             for (int j = field[0].length - 1; j >= 0; j--) {
                 if (field2[i][j] == 0 && field[i][j] == 1) {
@@ -62,20 +68,26 @@ public class Main {
                     }
                 }
                 if (field2[i][j]==1 && field[i][j]!=2) {
-                    iMax = Math.max(i, iMax);
-                    iMin = Math.min(i, iMin);
-                    jMax = Math.max(j, jMax);
-                    jMin = Math.min(j, jMin);
+
+
+
+                    plotsCoordAndTotalBestPlotsForBuying[2] = Math.max(i, plotsCoordAndTotalBestPlotsForBuying[2]);
+                    plotsCoordAndTotalBestPlotsForBuying[1] = Math.min(i, plotsCoordAndTotalBestPlotsForBuying[1]);
+                    plotsCoordAndTotalBestPlotsForBuying[4] = Math.max(j, plotsCoordAndTotalBestPlotsForBuying[4]);
+                    plotsCoordAndTotalBestPlotsForBuying[3] = Math.min(j, plotsCoordAndTotalBestPlotsForBuying[3]);
                 }
                 if (field2[i][j]==1)    field2[i][j]=2;
 
-                if (i>=iMin && i<=iMax && j>=jMin && j<=jMax)
-                    if (field[i][j]==1) totalGoodPlots++;
+                if (i>=plotsCoordAndTotalBestPlotsForBuying[1] &&
+                        i<=plotsCoordAndTotalBestPlotsForBuying[2] &&
+                        j>=plotsCoordAndTotalBestPlotsForBuying[3] &&
+                        j<=plotsCoordAndTotalBestPlotsForBuying[4] &&
+                        field[i][j]==1)
+                    plotsCoordAndTotalBestPlotsForBuying[0]++;
             }
         }
-        return field2;
     }
-    public static byte[][] searchForPossiblePlotsOfLand (byte field[][], byte field2[][]){
+    public static void searchForPossiblePlotsOfLand (byte field[][], byte field2[][]){
         boolean test=false; int temp=0;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
@@ -103,7 +115,6 @@ public class Main {
                 }
             }
         }
-        return field2;
     }
     public static  byte[][] inputData() {
         Scanner scanner = new Scanner(System.in);
