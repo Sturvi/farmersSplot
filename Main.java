@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int totalPlotsForBuying=0, totalGoodPlots=0;
+    public static int totalGoodPlots=0;
     public static int iMin, iMax=0, jMin, jMax=0;
     public static boolean matrixHaveTheEntryPoints=false;
 
@@ -14,6 +14,7 @@ public class Main {
 
 
         while (true) {
+            int totalPlotsForBuying=0;
             iMin=field.length-1;    jMin=field[0].length-1;
             field2 = searchForTheEntryPointToTheMatrix(field, field2);
             if (matrixHaveTheEntryPoints==false)
