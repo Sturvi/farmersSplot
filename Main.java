@@ -19,7 +19,6 @@ public class Main {
             if (matrixHaveTheEntryPoints==false) break;
             field2 = searchForPossiblePlotsOfLand(field, field2);
             field2 = searchForUnaccountedLandPlots(field, field2);
-            field2 = replaceAll1to2(field, field2);
             totalPlotsForBuying = (iMax - iMin + 1) * (jMax - jMin + 1);
             double procent = (totalGoodPlots * 100) / totalPlotsForBuying;
             if (procent > bestProcent) {
@@ -33,17 +32,6 @@ public class Main {
         System.out.println(bestTotalPlotsForBuying);
     }
 
-    public static byte[][] replaceAll1to2 (byte field[][], byte field2[][]){
-        for (int i = 0; i < field2.length; i++) {
-            for (int j = 0; j < field2[0].length; j++) {
-                if (field2[i][j]==1)    field2[i][j]=2;
-
-                if (i>=iMin && i<=iMax && j>=jMin && j<=jMax)
-                    if (field[i][j]==1) totalGoodPlots++;
-            }
-        }
-        return field2;
-    }
     public static byte[][] searchForTheEntryPointToTheMatrix (byte[][] field, byte field2[][]){
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[0].length; j++) {
@@ -77,6 +65,10 @@ public class Main {
                     jMax = Math.max(j, jMax);
                     jMin = Math.min(j, jMin);
                 }
+                if (field2[i][j]==1)    field2[i][j]=2;
+
+                if (i>=iMin && i<=iMax && j>=jMin && j<=jMax)
+                    if (field[i][j]==1) totalGoodPlots++;
             }
         }
         return field2;
