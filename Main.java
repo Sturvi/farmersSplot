@@ -68,9 +68,6 @@ public class Main {
                     }
                 }
                 if (field2[i][j]==1 && field[i][j]!=2) {
-
-
-
                     plotsCoordAndTotalBestPlotsForBuying[2] = Math.max(i, plotsCoordAndTotalBestPlotsForBuying[2]);
                     plotsCoordAndTotalBestPlotsForBuying[1] = Math.min(i, plotsCoordAndTotalBestPlotsForBuying[1]);
                     plotsCoordAndTotalBestPlotsForBuying[4] = Math.max(j, plotsCoordAndTotalBestPlotsForBuying[4]);
