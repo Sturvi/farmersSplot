@@ -22,10 +22,10 @@ public class Main {
                     (plotsCoordAndTotalPlotsForBuying[4] - plotsCoordAndTotalPlotsForBuying[3] + 1);
 
             double procent = (plotsCoordAndTotalPlotsForBuying[0] * 100) / totalPlots;
-            if (procent > bestProcent) {
+            if (procent > bestProcent && totalPlots > 1) {
                 bestTotalPlotsForBuying = totalPlots;
                 bestProcent = procent;
-            } else if (procent == bestProcent && bestTotalPlotsForBuying<totalPlots)
+            } else if (procent == bestProcent && bestTotalPlotsForBuying<totalPlots && totalPlots > 1)
                 bestTotalPlotsForBuying = totalPlots;
 
 
