@@ -8,6 +8,7 @@ public class Main {
         int bestTotalPlotsForBuying = 0;
         double bestProcent = 0;
         while (true) {
+<<<<<<< Updated upstream
             //[0] - totalGoodPlotsforByning, [1] - iMin, [2] - iMax, [3] - jMin, [4] - jMax
             int[] plotsCoordAndTotalPlotsForBuying = new int[5];
             boolean matrixHaveTheEntryPoints = false;
@@ -30,6 +31,23 @@ public class Main {
             plotsCoordAndTotalPlotsForBuying[4] = 0;
             plotsCoordAndTotalPlotsForBuying[0] = 0;
             matrixHaveTheEntryPoints = false;
+=======
+            iMin=field.length-1;    jMin=field[0].length-1;
+            field2 = searchForTheEntryPointToTheMatrix(field, field2);
+            if (matrixHaveTheEntryPoints==false) break;
+            field2 = searchForPossiblePlotsOfLand(field, field2);
+            field2 = searchForUnaccountedLandPlots(field, field2);
+            field2 = replaceAll1to2(field, field2);
+            totalPlotsForBuying = (iMax - iMin + 1) * (jMax - jMin + 1);
+            double procent = (totalGoodPlots * 100) / totalPlotsForBuying;
+            if (procent > bestProcent && totalPlotsForBuying>1) {
+                bestTotalPlotsForBuying = totalPlotsForBuying;
+                bestProcent = procent;
+            }
+            if (procent == bestProcent && bestTotalPlotsForBuying<totalPlotsForBuying  && totalPlotsForBuying>1)
+                bestTotalPlotsForBuying = totalPlotsForBuying;
+            iMax=0; jMax=0; totalPlotsForBuying=0; totalGoodPlots=0; matrixHaveTheEntryPoints=false;
+>>>>>>> Stashed changes
         }
         System.out.println(bestTotalPlotsForBuying);
     }
